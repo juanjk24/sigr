@@ -1,0 +1,6 @@
+# Aqui iran todos os arquivos e pastas que nao serao comitados para o repositorio, como por exemplo:
+# node_modules, arquivos de log, arquivos de configuracion local, etc.
+node_modules/
+logs/
+*.log
+*.env
