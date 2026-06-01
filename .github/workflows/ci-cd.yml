@@ -1,0 +1,102 @@
+name: CI-CD SIGR
+ 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+ 
+jobs:
+  # ---------- 1. LINT + TYPECHECK ----------
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Instalar dependencias backend
+        working-directory: ./backend
+        run: npm ci
+      - name: Lint backend
+        working-directory: ./backend
+        run: npm run lint
+      - name: Typecheck backend
+        working-directory: ./backend
+        run: npx tsc --noEmit
+ 
+  # ---------- 2. TEST ----------
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: sigr_test
+        ports: [ '5432:5432' ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - name: Instalar dependencias
+        working-directory: ./backend
+        run: npm ci
+      - name: Ejecutar pruebas
+        working-directory: ./backend
+        run: npm test -- --coverage
+        env:
+          DATABASE_URL: postgres://postgres:test@localhost:5432/sigr_test
+ 
+  # ---------- 3. BUILD ----------
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - name: Build backend
+        working-directory: ./backend
+        run: npm ci && npm run build
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm ci && npm run build
+      - name: Guardar artefacto del frontend
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
+ 
+  # ---------- 4. SECURITY ----------
+  security:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - name: Auditoria de dependencias backend
+        working-directory: ./backend
+        run: npm audit --audit-level=high || true
+ 
+  # ---------- 5. DEPLOY (solo main) ----------
+  deploy:
+    runs-on: ubuntu-latest
+    needs: security
+    if: github.ref == 'refs/heads/main'
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Desplegar a staging (simulado)
+        run: |
+          echo "Construyendo imagenes Docker..."
+          echo "Desplegando SIGR al entorno de staging..."
+          echo "Despliegue completado correctamente."
