@@ -55,7 +55,7 @@ El proyecto implementa una arquitectura modular basada en Screaming Architecture
 - Git
 - GitHub
 - GitHub Issues
-- Jenkins (integración continua futura)
+- Github Actions
 
 ---
 
