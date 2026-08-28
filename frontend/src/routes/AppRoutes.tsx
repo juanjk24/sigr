@@ -9,6 +9,7 @@ import OrdersPage from '../pages/orders/OrdersPage';
 import ReservationsPage from '../pages/reservations/ReservationsPage';
 import BillingPage from '../pages/billing/BillingPage';
 import ReportsPage from '../pages/reports/ReportsPage';
+import ProfilePage from '../pages/profile/ProfilePage';
 import ProtectedRoute from './ProtectedRoute';
 
 const AppRoutes: React.FC = () => {
@@ -17,6 +18,14 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={
