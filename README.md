@@ -44,7 +44,7 @@ El proyecto implementa una arquitectura modular basada en Screaming Architecture
 - Express
 - TypeScript
 - PostgreSQL
-- Prisma ORM
+- Drizzle ORM
 
 ## Frontend
 - React
