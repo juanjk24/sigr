@@ -8,6 +8,7 @@ const modules = [
   { to: '/menu', title: 'Menú', desc: 'Gestiona los platos del restaurante' },
   { to: '/categories', title: 'Categorías', desc: 'Organiza el menú por categorías' },
   { to: '/profile', title: 'Mi Perfil', desc: 'Consulta tus datos de cuenta' },
+  { to: '/orders', title: 'Ordenes', desc: 'Consulta tus órdenes' },
 ];
 
 const DashboardPage: React.FC = () => {
