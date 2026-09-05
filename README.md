@@ -214,9 +214,6 @@ Documentos incluidos en la línea base:
 README.md
 LICENSE.txt
 
-# Equipo de Desarrollo
-Juan Cuellar
-
 # Estado del Proyecto
 
 Versión actual de línea base: v1.0.0-baseline
