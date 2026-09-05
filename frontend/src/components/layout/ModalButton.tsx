@@ -6,6 +6,7 @@ interface ModalButtonProps {
     variant?: 'primary' | 'secondary' | 'danger';
     disabled?: boolean;
     loading?: boolean;
+    form?: string;
     children: React.ReactNode;
     className?: string;
 }
@@ -16,6 +17,7 @@ const ModalButton: React.FC<ModalButtonProps> = ({
     variant = 'secondary',
     disabled = false,
     loading = false,
+    form,
     children,
     className = '',
 }) => {
@@ -30,6 +32,7 @@ const ModalButton: React.FC<ModalButtonProps> = ({
     return (
         <button
             type={type}
+            form={form}
             onClick={onClick}
             disabled={disabled || loading}
             className={`${baseClasses} ${variantClasses[variant]} ${className}`}

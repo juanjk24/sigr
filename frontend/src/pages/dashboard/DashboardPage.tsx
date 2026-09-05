@@ -8,7 +8,8 @@ const modules = [
   { to: '/menu', title: 'Menú', desc: 'Gestiona los platos del restaurante' },
   { to: '/categories', title: 'Categorías', desc: 'Organiza el menú por categorías' },
   { to: '/profile', title: 'Mi Perfil', desc: 'Consulta tus datos de cuenta' },
-  { to: '/orders', title: 'Ordenes', desc: 'Consulta tus órdenes' },
+  { to: '/orders', title: 'Pedidos', desc: 'Crea y gestiona pedidos' },
+  { to: '/billing', title: 'Facturación', desc: 'Controla pagos y saldos' },
 ];
 
 const DashboardPage: React.FC = () => {

@@ -11,6 +11,8 @@ const navItems = [
   { to: '/profile', label: 'Mi Perfil' },
   { to: '/menu', label: 'Menú' },
   { to: '/categories', label: 'Categorías' },
+  { to: '/orders', label: 'Pedidos' },
+  { to: '/billing', label: 'Facturación' },
 ];
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
